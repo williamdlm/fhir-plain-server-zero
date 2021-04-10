@@ -1,4 +1,4 @@
-package com.evangelista.leonardo.fhirplainserver.entity;
+package com.evangelista.leonardo.fhirplainserver.models;
 
 import javax.persistence.*;
 
