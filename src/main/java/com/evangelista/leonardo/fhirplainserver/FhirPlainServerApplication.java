@@ -1,6 +1,5 @@
 package com.evangelista.leonardo.fhirplainserver;
 
-import com.evangelista.leonardo.fhirplainserver.config.FhirTesterConfig;
 import com.evangelista.leonardo.fhirplainserver.config.PlainRestfulServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -12,13 +11,10 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 
 @ServletComponentScan(basePackageClasses = {
 		PlainRestfulServer.class})
 @SpringBootApplication(exclude = {ElasticsearchRestClientAutoConfiguration.class})
-//@Import({SubscriptionSubmitterConfig.class, SubscriptionProcessorConfig.class, SubscriptionChannelConfig.class, WebsocketDispatcherConfig.class})
 public class FhirPlainServerApplication extends SpringBootServletInitializer {
 
 	@Autowired
@@ -39,34 +35,14 @@ public class FhirPlainServerApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	public ServletRegistrationBean hapiServletRegistration() {
-		ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+	public ServletRegistrationBean<PlainRestfulServer> hapiServletRegistration() {
+		ServletRegistrationBean<PlainRestfulServer> servletRegistrationBean = new ServletRegistrationBean<>();
 		PlainRestfulServer plainRestfulServer = new PlainRestfulServer();
 		beanFactory.autowireBean(plainRestfulServer);
 		servletRegistrationBean.setServlet(plainRestfulServer);
 		servletRegistrationBean.addUrlMappings("/fhir/*");
 		servletRegistrationBean.setLoadOnStartup(1);
 		return servletRegistrationBean;
-	}
-
-
-	@Bean
-	public ServletRegistrationBean overlayRegistrationBean() {
-
-		AnnotationConfigWebApplicationContext annotationConfigWebApplicationContext = new AnnotationConfigWebApplicationContext();
-		annotationConfigWebApplicationContext.register(FhirTesterConfig.class);
-
-		DispatcherServlet dispatcherServlet = new DispatcherServlet(
-				annotationConfigWebApplicationContext);
-		dispatcherServlet.setContextClass(AnnotationConfigWebApplicationContext.class);
-		dispatcherServlet.setContextConfigLocation(FhirTesterConfig.class.getName());
-
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean();
-		registrationBean.setServlet(dispatcherServlet);
-		registrationBean.addUrlMappings("/*");
-		registrationBean.setLoadOnStartup(1);
-		return registrationBean;
-
 	}
 
 }

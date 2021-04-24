@@ -17,20 +17,32 @@ repositories {
 }
 
 dependencies {
+
+	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-quartz'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-autoconfigure'
 
-	implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
-	compile group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-base', version: '5.1.0'
-	compile group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-server', version: '5.1.0'
-	compile group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-structures-r4', version: '5.1.0'
-	compile group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-validation-resources-r4', version: '5.1.0'
+	implementation "ca.uhn.hapi.fhir:hapi-fhir-server:${hapiFhirVersion}"
+	implementation "ca.uhn.hapi.fhir:hapi-fhir-jpaserver-base:${hapiFhirVersion}"
+	implementation group: 'ca.uhn.hapi.fhir', name: 'hapi-fhir-structures-r4', version: "${hapiFhirVersion}"
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-api', version: '9.4.40.v20210413'
+	implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-client', version: '9.4.40.v20210413'
+
+	implementation group: 'org.apache.lucene', name: 'lucene-core', version: '5.5.5'
+	implementation group: 'org.apache.lucene', name: 'lucene-queries', version: '5.5.5'
+
+	runtimeOnly 'com.h2database:h2'
 }
 
 test {
