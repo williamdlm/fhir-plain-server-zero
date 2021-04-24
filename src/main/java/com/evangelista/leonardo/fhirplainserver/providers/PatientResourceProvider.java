@@ -1,4 +1,4 @@
-package com.evangelista.leonardo.fhirplainserver.controllers;
+package com.evangelista.leonardo.fhirplainserver.providers;
 
 import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Read;
@@ -6,18 +6,14 @@ import ca.uhn.fhir.rest.annotation.Search;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import com.evangelista.leonardo.fhirplainserver.converters.PatientConverter;
-import com.evangelista.leonardo.fhirplainserver.models.Paciente;
 import com.evangelista.leonardo.fhirplainserver.service.PacienteService;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.BooleanType;
-import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
