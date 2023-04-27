@@ -18,4 +18,20 @@ public class PatientServiceImpl implements PatientService {
                  .orElseThrow(() -> new RuntimeException());
     }
 
+    @Override
+    public Patient createPatient(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    @Override
+    public void deletePatientById(Long id) {
+      patientRepository.deleteById(id);
+    }
+
+    @Override
+    public Patient updatePatient(Long id, Patient patient) {
+        Patient byId  = this.findById(id);
+        return patientRepository.save(byId);
+    }
+
 }
