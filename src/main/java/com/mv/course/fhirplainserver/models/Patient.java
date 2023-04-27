@@ -2,9 +2,10 @@ package com.mv.course.fhirplainserver.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
-@Table(name = "tb_patient")
+@Table(name = "paciente")
 public class Patient {
 
     @Id
@@ -16,13 +17,13 @@ public class Patient {
     private String name;
 
     @Column(name= "dt_nascimento", nullable = false)
-    private LocalDate birthDate;
+    private Date birthDate;
 
     public Patient(){
 
     }
 
-    public Patient(Long id, String name, LocalDate birthDate) {
+    public Patient(Long id, String name, Date birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -44,11 +45,11 @@ public class Patient {
         this.name = name;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 }

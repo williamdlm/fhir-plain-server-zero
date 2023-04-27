@@ -3,15 +3,21 @@ package com.mv.course.fhirplainserver.providers;
 import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Read;
 import ca.uhn.fhir.rest.server.IResourceProvider;
+import com.mv.course.fhirplainserver.converters.PatientConverter;
+import com.mv.course.fhirplainserver.service.PatientService;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Calendar;
-import java.util.Date;
 
 @Component
 public class PatientProvider implements IResourceProvider {
+
+    @Autowired
+   PatientService patientService;
+
+    @Autowired
+    PatientConverter patientConverter;
 
     @Override
     public Class<Patient> getResourceType() {
@@ -20,13 +26,9 @@ public class PatientProvider implements IResourceProvider {
 
     @Read
     public Patient readResourceById(@IdParam IdType id){
-        Patient patient = new Patient();
-        patient.addName().addGiven("William").setFamily("Mota");
+        com.mv.course.fhirplainserver.models.Patient byId = patientService.findById(id.getIdPartAsLong());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(1997, 5,22);
-        patient.setBirthDate(Date.from(calendar.toInstant()));
-
-        return patient;
+        patientConverter.convert(byId);
+        return patientConverter.convert(byId);
     }
 }
