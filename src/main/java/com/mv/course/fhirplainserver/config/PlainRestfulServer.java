@@ -1,6 +1,6 @@
-package com.evangelista.leonardo.fhirplainserver.config;
+package com.mv.course.fhirplainserver.config;
 
-import com.evangelista.leonardo.fhirplainserver.providers.PatientResourceProvider;
+import com.mv.course.fhirplainserver.providers.PatientProvider;
 
 import javax.servlet.ServletException;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class PlainRestfulServer extends BasePlainRestfulServer {
         super.initialize();
 
         setResourceProviders(Arrays.asList(
-                myApplicationContext.getBean(PatientResourceProvider.class)
+                myApplicationContext.getBean(PatientProvider.class)
         ));
 
     }

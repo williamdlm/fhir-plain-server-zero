@@ -1,4 +1,4 @@
-package com.evangelista.leonardo.fhirplainserver;
+package com.mv.course.fhirplainserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

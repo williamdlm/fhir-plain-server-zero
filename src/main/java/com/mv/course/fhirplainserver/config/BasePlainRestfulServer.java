@@ -1,19 +1,15 @@
-package com.evangelista.leonardo.fhirplainserver.config;
+package com.mv.course.fhirplainserver.config;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.EncodingEnum;
 import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.ResponseHighlighterInterceptor;
-import com.evangelista.leonardo.fhirplainserver.utils.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 
 public class BasePlainRestfulServer extends RestfulServer {
-
-    @Autowired
-    AppProperties appProperties;
 
     @Autowired
     ApplicationContext myApplicationContext;
@@ -35,7 +31,6 @@ public class BasePlainRestfulServer extends RestfulServer {
         setDefaultResponseEncoding(EncodingEnum.JSON);
 
         registerInterceptor(new ResponseHighlighterInterceptor());
-
 
     }
 
