@@ -7,17 +7,18 @@ import com.mv.course.fhirplainserver.converters.PatientConverter;
 import com.mv.course.fhirplainserver.service.PatientService;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Patient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Date;
 
 @Component
 public class PatientProvider implements IResourceProvider {
 
+    private static Logger logger = LoggerFactory.getLogger(PatientProvider.class);
+
     @Autowired
-   PatientService patientService;
+    PatientService patientService;
 
     @Autowired
     PatientConverter patientConverter;
@@ -28,7 +29,7 @@ public class PatientProvider implements IResourceProvider {
     }
 
     @Read
-    public Patient readResourceById(@IdParam IdType id){
+    public Patient readResourceById(@IdParam IdType id) {
         com.mv.course.fhirplainserver.models.Patient byId = patientService.findById(id.getIdPartAsLong());
 
         patientConverter.convert(byId);
@@ -37,7 +38,7 @@ public class PatientProvider implements IResourceProvider {
 
 
     @Create
-    public MethodOutcome createPatient(@ResourceParam Patient patient){
+    public MethodOutcome createPatient(@ResourceParam Patient patient) {
         com.mv.course.fhirplainserver.models.Patient newPatient = patientService.createPatient(patientConverter.reverse().convert(patient));
         MethodOutcome methodOutcome = new MethodOutcome();
         methodOutcome.setCreated(true);
@@ -46,10 +47,12 @@ public class PatientProvider implements IResourceProvider {
     }
 
     @Update
-    public MethodOutcome updatePatient(@IdParam IdType id,@ResourceParam Patient patient){
+    public MethodOutcome updatePatient(@IdParam IdType id, @ResourceParam Patient patient) {
         com.mv.course.fhirplainserver.models.Patient byId = patientService.findById(id.getIdPartAsLong());
-
-        byId = patientService.createPatient(patientConverter.reverse().convert(patient));
+        System.out.println(patient.getId());
+        logger.info("PATIENT GETID: " + patient.getIdElement().getIdPartAsLong());
+        //byId = patientService.updatePatient(patient.getIdElement().getIdPartAsLong(), patientConverter.reverse().convert(patient));
+        byId = patientService.updatePatient(id.getIdPartAsLong(), patientConverter.reverse().convert(patient));
         MethodOutcome methodOutcome = new MethodOutcome();
         methodOutcome.setCreated(true);
         methodOutcome.setResource(patientConverter.convert(byId));

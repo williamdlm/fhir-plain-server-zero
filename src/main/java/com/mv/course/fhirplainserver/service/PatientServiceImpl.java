@@ -31,6 +31,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient updatePatient(Long id, Patient patient) {
         Patient byId  = this.findById(id);
+        byId = patient;
         return patientRepository.save(byId);
     }
 

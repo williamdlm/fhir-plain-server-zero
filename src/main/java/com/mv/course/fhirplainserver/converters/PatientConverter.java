@@ -1,8 +1,10 @@
 package com.mv.course.fhirplainserver.converters;
 
 import com.google.common.base.Converter;
+import com.mv.course.fhirplainserver.repository.PatientRepository;
 import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Component
 public class PatientConverter extends Converter<com.mv.course.fhirplainserver.models.Patient, Patient> {
+
+    @Autowired
+    PatientRepository patientRepository;
     @Override
     protected Patient doForward(com.mv.course.fhirplainserver.models.Patient patientMv) {
         Patient patient = new Patient();
@@ -28,7 +33,7 @@ public class PatientConverter extends Converter<com.mv.course.fhirplainserver.mo
     @Override
     protected com.mv.course.fhirplainserver.models.Patient doBackward(Patient patientFhir) {
         com.mv.course.fhirplainserver.models.Patient patient = new com.mv.course.fhirplainserver.models.Patient();
-        patient.setId(1l);
+        patient.setId(patientFhir.getIdElement().getIdPartAsLong());
         List<HumanName> names = patientFhir.getName();
         patient.setName(names.get(0).getGiven().toString());
         patient.setBirthDate(patientFhir.getBirthDate());
