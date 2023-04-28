@@ -1,9 +1,6 @@
 package com.mv.course.fhirplainserver.providers;
 
-import ca.uhn.fhir.rest.annotation.Create;
-import ca.uhn.fhir.rest.annotation.IdParam;
-import ca.uhn.fhir.rest.annotation.Read;
-import ca.uhn.fhir.rest.annotation.ResourceParam;
+import ca.uhn.fhir.rest.annotation.*;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import com.mv.course.fhirplainserver.converters.PatientConverter;
@@ -41,11 +38,23 @@ public class PatientProvider implements IResourceProvider {
 
     @Create
     public MethodOutcome createPatient(@ResourceParam Patient patient){
-        com.mv.course.fhirplainserver.models.Patient teste = patientConverter.reverse().convert(patient);
-        com.mv.course.fhirplainserver.models.Patient newPatient = patientService.createPatient(teste);
+        com.mv.course.fhirplainserver.models.Patient newPatient = patientService.createPatient(patientConverter.reverse().convert(patient));
         MethodOutcome methodOutcome = new MethodOutcome();
         methodOutcome.setCreated(true);
         methodOutcome.setResource(patientConverter.convert(newPatient));
         return methodOutcome;
     }
+
+    @Update
+    public MethodOutcome updatePatient(@IdParam IdType id,@ResourceParam Patient patient){
+        com.mv.course.fhirplainserver.models.Patient byId = patientService.findById(id.getIdPartAsLong());
+
+        byId = patientService.createPatient(patientConverter.reverse().convert(patient));
+        MethodOutcome methodOutcome = new MethodOutcome();
+        methodOutcome.setCreated(true);
+        methodOutcome.setResource(patientConverter.convert(byId));
+        return methodOutcome;
+    }
+
+
 }
