@@ -9,5 +9,6 @@ public interface PatientService {
 
     void deletePatientById(Long id);
 
+
     Patient updatePatient(Long id, Patient patient);
 }

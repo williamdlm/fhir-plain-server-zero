@@ -59,5 +59,11 @@ public class PatientProvider implements IResourceProvider {
         return methodOutcome;
     }
 
+    @Delete
+    public void DeleteResourceById(@IdParam IdType id) {
+         patientService.deletePatientById(id.getIdPartAsLong());
+
+    }
+
 
 }
