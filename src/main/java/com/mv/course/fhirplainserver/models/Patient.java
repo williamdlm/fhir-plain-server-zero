@@ -2,6 +2,7 @@ package com.mv.course.fhirplainserver.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,11 +11,13 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@ToString
+@SequenceGenerator(name = "SEQ_PACIENTE", sequenceName = "SEQ_PACIENTE", allocationSize = 1)
 @Table(name = "paciente")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_PACIENTE")
     @Column(name = "cd_paciente", nullable = false)
     private Long id;
 

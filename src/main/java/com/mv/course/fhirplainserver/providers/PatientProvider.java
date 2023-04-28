@@ -4,6 +4,7 @@ import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Read;
 import ca.uhn.fhir.rest.annotation.ResourceParam;
+import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import com.mv.course.fhirplainserver.converters.PatientConverter;
 import com.mv.course.fhirplainserver.service.PatientService;
@@ -39,10 +40,12 @@ public class PatientProvider implements IResourceProvider {
 
 
     @Create
-    public Patient createPatient(@ResourceParam Patient patient){
-        com.mv.course.fhirplainserver.models.Patient newPatient = patientService.createPatient(patientConverter.reverse().convert(patient));
-
-        c
-        return patientConverter.convert(newPatient);
+    public MethodOutcome createPatient(@ResourceParam Patient patient){
+        com.mv.course.fhirplainserver.models.Patient teste = patientConverter.reverse().convert(patient);
+        com.mv.course.fhirplainserver.models.Patient newPatient = patientService.createPatient(teste);
+        MethodOutcome methodOutcome = new MethodOutcome();
+        methodOutcome.setCreated(true);
+        methodOutcome.setResource(patientConverter.convert(newPatient));
+        return methodOutcome;
     }
 }
