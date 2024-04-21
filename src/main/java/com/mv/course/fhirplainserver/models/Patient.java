@@ -15,7 +15,7 @@ import java.util.Date;
 @ToString
 @RequiredArgsConstructor
 @SequenceGenerator(name = "SEQ_PACIENTE", sequenceName = "SEQ_PACIENTE", allocationSize = 1)
-@Table(name = "paciente", schema = "dbamv")
+@Table(name = "paciente")
 public class Patient {
 
     @Id
